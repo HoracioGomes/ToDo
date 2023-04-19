@@ -2,6 +2,7 @@ package com.example.todo.services;
 
 import com.example.todo.domain.Todo;
 import com.example.todo.repositories.TodoRepository;
+import com.example.todo.services.exceptions.ObjectNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class TodoService {
 
     public Todo findById(Integer id) {
         Optional<Todo> obj = todoRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() ->  new ObjectNotFoundException("Objeto não encontrado!"));
     }
 
     public List<Todo> findAllOpen() {
